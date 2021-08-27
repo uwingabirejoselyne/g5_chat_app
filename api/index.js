@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const multer = require("multer");
@@ -29,6 +30,7 @@ mongoose.connect(
     console.log("Connected to MongoDB");
   }
 );
+app.use(cors({ origin: "https://g5-chat-app.netlify.app" }));
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 app.use(express.urlencoded({ extended: true }));
