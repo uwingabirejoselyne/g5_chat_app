@@ -30,7 +30,7 @@ mongoose.connect(
     console.log("Connected to MongoDB");
   }
 );
-app.use(cors({ origin: "https://g5-chat-app.netlify.app" }));
+app.use(cors({ origin: "https://g5-test-chat-app.herokuapp.com" }));
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 app.use(express.urlencoded({ extended: true }));
