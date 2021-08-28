@@ -4,7 +4,6 @@ import Conversation from "../../components/conversations/Conversation";
 import Message from "../../components/message/Message";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import axios from "axios";
 import { io } from "socket.io-client";
 import {SendRounded as SendIcon, Search, EmojiEmotionsOutlined, AttachFileRounded, PhotoSizeSelectActualRounded} from "@material-ui/icons";
 import Avatar from 'react-avatar';
@@ -17,6 +16,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import Rooms from "../../components/Rooms/Rooms";
+import {ChatAppApi} from "../../apiCalls";
 
 export default function Messenger() {
   const [currentChatUser, setCurrentChatUser] = useState({});
@@ -119,7 +119,7 @@ if(!matches && (toggleCurrentChatBox === 1)) {
   useEffect(() => {
     const getConversations = async () => {
       try {
-        const res = await axios.get("/conversations/" + user.others._id);
+        const res = await ChatAppApi.get("/conversations/" + user.others._id);
         setConversations(res.data);
       } catch (err) {
         console.log(err);
@@ -132,7 +132,7 @@ if(!matches && (toggleCurrentChatBox === 1)) {
     useEffect(() => {
     const getRooms = async () => {
       try {
-        const res = await axios.get("/rooms/member/" + user.others._id);
+        const res = await ChatAppApi.get("/rooms/member/" + user.others._id);
         setRooms(res.data.rooms);
       } catch (err) {
         console.log(err);
@@ -144,7 +144,7 @@ if(!matches && (toggleCurrentChatBox === 1)) {
   useEffect(() => {
     const getMessages = async () => {
       try {
-        const res = await axios.get("/messages/" + currentChat?._id);
+        const res = await ChatAppApi.get("/messages/" + currentChat?._id);
         setMessages(res.data);
       } catch (err) {
         console.log(err);
@@ -154,7 +154,7 @@ if(!matches && (toggleCurrentChatBox === 1)) {
     const handleChatUser = async() => {
       if(!currentChat) return null
       const sender = currentChat.members.filter(member=> user.others._id !== member)
-      await axios.get("/users?userId=" + sender).then(res=> {
+      await ChatAppApi.get("/users?userId=" + sender).then(res=> {
       setCurrentChatUser(res.data);
     }).catch(err=>console.log(err))
     }
@@ -180,7 +180,7 @@ if(!matches && (toggleCurrentChatBox === 1)) {
     });
 
     try {
-      const res = await axios.post("/messages", message);
+      const res = await ChatAppApi.post("/messages", message);
       setMessages([...messages, res.data]);
       setNewMessage("");
     } catch (err) {
@@ -196,7 +196,7 @@ if(!matches && (toggleCurrentChatBox === 1)) {
     if(isRoom) {
     setRoomSearchValue(e.target.value);
     if(e.target.value.length > 0) {
-      const rooms = await axios.post("/rooms/search/", {search: e.target.value, sender: user.others._id});
+      const rooms = await ChatAppApi.post("/rooms/search/", {search: e.target.value, sender: user.others._id});
       if (rooms.data.length < 1) {
         setSearchRooms([]);
       }
@@ -211,7 +211,7 @@ if(!matches && (toggleCurrentChatBox === 1)) {
     }
     setSearchValue(e.target.value);
     if(e.target.value.length > 0) {
-      const senders = await axios.post("/users/search/", {search: e.target.value});
+      const senders = await ChatAppApi.post("/users/search/", {search: e.target.value});
       if(senders.data.length > 0) {
         const chats = senders.data.filter(sender=> sender._id !== user.others._id);
         setSearchUsers([...chats]);
@@ -227,7 +227,7 @@ if(!matches && (toggleCurrentChatBox === 1)) {
 
   const handleChatBox = async(receiver) => {
     setToggleCurrentChatBox(true);
-    const res = await axios.post('/conversations/', {senderId: user.others._id, receiverId: receiver._id});
+    const res = await ChatAppApi.post('/conversations/', {senderId: user.others._id, receiverId: receiver._id});
     setCurrentChat(...res.data);
     history.push("/");
   }

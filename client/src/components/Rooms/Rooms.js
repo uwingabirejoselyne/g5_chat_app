@@ -1,6 +1,5 @@
 import Message from "../../components/message/Message";
 import { useContext, useRef } from "react";
-import axios from "axios";
 import {
   SendRounded as SendIcon,
   EmojiEmotionsOutlined,
@@ -14,6 +13,7 @@ import { ThemeContext } from "../../components/ThemeProvider";
 import chatBgLight from "../../pages/messenger/chat-bg-light.svg";
 import chatBgDark from "../../pages/messenger/chat-bg-dark.svg";
 import "react-tabs/style/react-tabs.css";
+import { ChatAppApi } from "../../apiCalls";
 
 const Rooms = ({
   currentRoom,
@@ -48,7 +48,7 @@ const Rooms = ({
     };
 
     try {
-      await axios.put(
+      await ChatAppApi.put(
         "/rooms/sendmessage/" + currentRoom._id + "/" + user,
         message
       );

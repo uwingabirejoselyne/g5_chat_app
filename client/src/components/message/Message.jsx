@@ -1,11 +1,11 @@
 import React, {useState, useEffect, useContext} from 'react'
 import "./message.css";
 import { format } from "timeago.js";
-import axios from 'axios';
 import Avatar from 'react-avatar';
 import { ThemeContext } from "../../components/ThemeProvider";
 import ContextMenu from './contextMenu';
 import ContextList from './contextMenuOptions';
+import {ChatAppApi} from "../../apiCalls";
 
 export default function Message({ message, own, isRoom, receiverId }) {
   const [user, setUser] = useState({})
@@ -26,7 +26,7 @@ export default function Message({ message, own, isRoom, receiverId }) {
 
   useEffect(()=> {
     const fetchMsgSender = async() => {
-      await axios.get("/users?userId=" + message.sender).then(res=> {
+      await ChatAppApi.get("/users?userId=" + message.sender).then(res=> {
         setUser(res.data);
       }).catch(err=>console.log(err))
     }
@@ -62,7 +62,7 @@ export default function Message({ message, own, isRoom, receiverId }) {
     switch(Item.name){
       case "Delete":
         console.log("Delete",contextId)
-        axios.put("/messages/deleteMsg", {contextId}).then(res=> {
+        ChatAppApi.put("/messages/deleteMsg", {contextId}).then(res=> {
         setToggleContextMenu(false);
       }).catch(err=>{console.log(err)
       setToggleContextMenu(false)

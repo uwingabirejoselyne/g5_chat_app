@@ -9,9 +9,9 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import axios from "axios";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import { ChatAppApi } from "../../apiCalls";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -31,7 +31,7 @@ const RoomDialog = (props) => {
 
   const handleRoomCreation = async () => {
     try {
-      await axios.post("/rooms/", { name: roomName, creator });
+      await ChatAppApi.post("/rooms/", { name: roomName, creator });
       setRoomStatus(1);
       setRoomName("");
     } catch (err) {

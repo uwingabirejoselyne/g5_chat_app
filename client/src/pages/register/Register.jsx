@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import axios from "axios";
+// import axios from "axios";
 import { useRef, useContext } from "react";
 import "./register.css";
 import { useHistory } from "react-router";
@@ -8,7 +8,7 @@ import {CircularProgress} from "@material-ui/core";
 import swal from 'sweetalert';
 import { ThemeContext } from "../../components/ThemeProvider";
 import { AuthContext } from "../../context/AuthContext";
-import { loginCall } from "../../apiCalls";
+import { loginCall, ChatAppApi } from "../../apiCalls";
 
 export default function Register() {
   const firstname = useRef();
@@ -44,7 +44,7 @@ export default function Register() {
         password: password.current.value,
       };
       try {
-        await axios.post("/auth/register", user).then(res=>{
+        await ChatAppApi.post("/auth/register", user).then(res=>{
         setLoader(false);
         swal({
   title: "Good job!",

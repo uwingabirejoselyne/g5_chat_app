@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import "./conversation.css";
 import Avatar from 'react-avatar';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import { ThemeContext } from "../ThemeProvider";
+import {ChatAppApi} from "../../apiCalls";
 
 export default function Conversation({ conversation, currentUser, roomsLength }) {
   const [user, setUser] = useState(null);
@@ -22,10 +22,10 @@ export default function Conversation({ conversation, currentUser, roomsLength })
     const getUser = async () => {
       try {
         if(friendId) {
-          res = await axios.get("/users?userId=" + friendId);
+          res = await ChatAppApi.get("/users?userId=" + friendId);
         }
         else {
-          res = await axios.get("/users?userId=" + conversation._id);
+          res = await ChatAppApi.get("/users?userId=" + conversation._id);
         }
         setUser(res.data);
       } catch (err) {
@@ -40,7 +40,7 @@ export default function Conversation({ conversation, currentUser, roomsLength })
   useEffect(() => {
     const getLastMessage = async () => {
     try {
-      const res = await axios.get(`/messages/lastOne/${conversation._id}`);
+      const res = await ChatAppApi.get(`/messages/lastOne/${conversation._id}`);
       setLastMsg(res.data[0].text);
     } catch (err) {
     }
