@@ -9,14 +9,17 @@ import swal from 'sweetalert';
 import { ThemeContext } from "../../components/ThemeProvider";
 import { AuthContext } from "../../context/AuthContext";
 import { loginCall, ChatAppApi } from "../../apiCalls";
+import PasswordChecklist from 'react-password-checklist';
 
 export default function Register() {
   const firstname = useRef();
   const lastname = useRef();
   const username = useRef();
   const email = useRef();
-  const password = useRef();
-  const passwordAgain = useRef();
+  // const password = useRef();
+  // const passwordAgain = useRef();
+	const [password, setPassword] = useState("")
+	const [passwordAgain, setPasswordAgain] = useState("")
   const history = useHistory();
   const [loader, setLoader] = useState(false);
   const state = useContext(ThemeContext);
@@ -59,6 +62,7 @@ export default function Register() {
     );
 });
         }).catch(err=>{
+        console.log(err);
           setLoader(false);
           swal({
   title: "Whoops!",
@@ -121,24 +125,29 @@ export default function Register() {
             <input
               placeholder="Password"
               required
-              ref={password}
+              onChange={e=> setPassword(e.target.value)}
               className="loginInput" style={chatMsgInput}
               type="password"
-              minLength="6"
             />
             <input
               placeholder="Password Again"
               required
-              ref={passwordAgain}
+              onChange={e=> setPasswordAgain(e.target.value)}
               className="loginInput" style={chatMsgInput}
               type="password"
             />
-            {!loader ? <button className="loginButton" type="submit">
+            {password !== "" && <PasswordChecklist
+				rules={["minLength","specialChar","number","capital","match"]}
+				minLength={6}
+				value={password}
+				valueAgain={passwordAgain}
+				onChange={(isValid) => {}}
+			/>}
+            {!loader ? <button className="loginButton" type="submit" disabled>
               Sign Up
             </button> : <button className="loginButton" type="submit">
               <CircularProgress size={20}/>
             </button>}
-            
               <div className="loginRegisterButton">
                 Already have account? <Link to="/login" style={{color: "inherit"}}>
                   Log into Account

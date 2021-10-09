@@ -30,7 +30,7 @@ mongoose.connect(
     console.log("Connected to MongoDB");
   }
 );
-app.use(cors({ origin: "https://g5-chat-app.netlify.app/" }));
+app.use(cors());
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 app.use(express.urlencoded({ extended: true }));
@@ -38,7 +38,7 @@ app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.json({ message: "Welcome to G5 Chat App API" });
 });
 

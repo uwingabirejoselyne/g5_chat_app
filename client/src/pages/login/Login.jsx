@@ -41,7 +41,7 @@ const Login = ({result}) => {
         </div>
         <div className="loginFormContainer">
           <form className="loginBox" style={chatMsgInput} onSubmit={handleClick}>
-        {result.error && (<Alert severity="error">Whoops! Username or Password is wrong — try again!</Alert>)}
+        {result?.error && (<Alert severity="error">Whoops! Username or Password is wrong — try again!</Alert>)}
             <input
               placeholder="Email"
               type="email"
@@ -53,7 +53,6 @@ const Login = ({result}) => {
               placeholder="Password"
               type="password"
               required
-              minLength="6"
               className="loginInput" style={chatMsgInput}
               ref={password}
             />

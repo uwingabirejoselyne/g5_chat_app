@@ -14,8 +14,8 @@ export const loginCall = async (userCredential, dispatch) => {
 export const ChatAppApi = axios.create({
   baseURL:
     process.env.NODE_ENV !== "production"
-      ? "http://localhost:8800"
-      : "https://g5-test-chat-app.herokuapp.com/",
+      ? "http://localhost:8800/api"
+      : "https://g5-test-chat-app.herokuapp.com/api",
   timeout: 5000,
 });
 
