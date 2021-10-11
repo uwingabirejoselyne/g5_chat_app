@@ -38,6 +38,10 @@ app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
 
+app.get("/", (req, res) => {
+  res.redirect("api");
+});
+
 app.get("/api", (req, res) => {
   res.json({ message: "Welcome to G5 Chat App API" });
 });

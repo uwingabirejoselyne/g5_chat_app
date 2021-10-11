@@ -7,19 +7,7 @@ const { check, validationResult } = require("express-validator");
 //REGISTER
 router.post(
   "/register",
-  [
-    check("firstname", "Please Enter firstname").not().isEmpty(),
-    check("lastname", "Please Enter lastname").not().isEmpty(),
-    check("username", "Please Enter username").not().isEmpty(),
-    check("email", "Please Enter email").not().isEmpty(),
-    check("email", "Please enter a valid email").isEmail(),
-    check(
-      "password",
-      "Please enter a valid password(with at least 6 characters)"
-    ).isLength({
-      min: 6,
-    }),
-  ],
+  [check("email", "Please enter a valid email").isEmail()],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -37,6 +25,7 @@ router.post(
           lastname: req.body.lastname,
           username: req.body.username,
           email: req.body.email,
+          mobileNo: req.body.mobileNo,
           password: hashedPassword,
         });
         //save user and respond

@@ -24,7 +24,7 @@
 .chatMenuInput {
   width: 100%;
   padding: 10px 0;
-  padding-left: 35px;
+  padding-left: 20px;
   margin-bottom: 20px;
   box-sizing: border-box;
   border: none;
@@ -207,6 +207,11 @@
 
 .noConversationDesc span {
   font-size: 15px;
+  font-weight: normal;
+}
+
+.noConversation i {
+  color: #888;
   font-weight: normal;
 }
 

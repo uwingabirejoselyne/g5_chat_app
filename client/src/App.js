@@ -15,7 +15,6 @@ import { ThemeContextProvider } from "./components/ThemeProvider";
 function App() {
   const { user } = useContext(AuthContext);
   const y = useContext(AuthContext);
-
   return (
     <Router>
       <Switch>
@@ -24,7 +23,7 @@ function App() {
             {user && user.token ? <Messenger /> : <Login result={y} />}
           </Route>
           <Route path="/login">
-            {user !== null ? <Redirect to="/" /> : <Login />}
+            {user !== null ? <Redirect to="/" /> : <Login result={y} />}
           </Route>
           <Route path="/register">
             {user && user.token ? <Redirect to="/" /> : <Register />}

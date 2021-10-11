@@ -1,3 +1,25 @@
 .registerSection {
   height: 450px;
 }
+
+.row-inputs {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.row-inputs > * {
+  width: 190px;
+}
+
+@media (max-width: 768px) {
+  .row-inputs {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .row-inputs > * {
+    width: 90%;
+    margin-top: 15px;
+  }
+}
