@@ -71,7 +71,7 @@ export default function Messenger() {
   const matches = useMediaQuery("(min-width:860px)");
 
   useEffect(() => {
-    socket.current = io("ws://localhost:8900");
+    socket.current = io("wss://g5-chat-app-socket.onrender.com:8900");
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
