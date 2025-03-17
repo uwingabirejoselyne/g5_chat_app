@@ -15,7 +15,7 @@ export const ChatAppApi = axios.create({
   baseURL:
     process.env.NODE_ENV !== "production"
       ? "http://localhost:8800/api"
-      : "https://g5-test-chat-app.herokuapp.com/api",
+      : "https://g5-chat-app.onrender.com/api",
   timeout: 5000,
 });
 
