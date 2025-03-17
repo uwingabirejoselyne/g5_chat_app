@@ -61,6 +61,7 @@ export default function Register() {
           });
         })
         .catch(({ response }) => {
+          console.log(response);
           if (response.status === 400) {
             swal({
               title: "Whoops!",
