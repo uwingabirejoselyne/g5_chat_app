@@ -38,7 +38,7 @@ export default function Register() {
       lastname: lastname.current.value,
       username: email.current.value.split("@")[0],
       email: email.current.value,
-      mobileno: mobileno.current.value,
+      mobileNo: mobileno.current.value,
       password: password,
     };
     try {
