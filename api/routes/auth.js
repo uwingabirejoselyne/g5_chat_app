@@ -54,7 +54,8 @@ router.post(
             );
           })
           .catch((err) => {
-            res.status(500).json({ error: "something went wrong!!!" });
+            console.log(err);
+            res.status(500).json({ error: "something went wrong!!!", err });
           });
       } else {
         res.status(400).json({ error: "user already exists!!!" });
